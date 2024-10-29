@@ -3,6 +3,9 @@ pipeline {
 	tools {
 		maven 'maven3'
 	}
+	environment{
+		SCANNER_HOME= tool 'sonar-scanner'
+		}
     stages {
         stage('Git Checkout') {
             steps {
@@ -22,6 +25,14 @@ pipeline {
         stage('Trivy Scan') {
             steps {
                 sh 'trivy fs --format table --output trivy-fs-report.html .'
+            }
+        }
+
+	stage('Sonarqube Analysis') {
+            steps {
+                withSonarQubeEnv('sonar') {
+                sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=BoardGame -Dsonar.projectKey=BoardGame \
+                }
             }
         }
 }
