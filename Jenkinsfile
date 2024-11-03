@@ -5,6 +5,7 @@ pipeline {
 	}
 	environment{
 		SCANNER_HOME= tool 'sonar-scanner'
+		DOCKER_IMAGE= "varungulati01/boardshack:${env.BUILD_NUMBER}"
 		}
     stages {
         stage('Git Checkout') {
@@ -44,6 +45,13 @@ pipeline {
                 }
             }
         }
+	stage('Quality Gate') {
+            steps {
+                script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar'
+                }
+            }
+        }
 	stage('Maven Build') {
             steps {
                 sh 'mvn package'
@@ -58,10 +66,24 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker_cred', toolName: 'docker') {
-                    sh 'docker build -t varungulati01/boardshack:latest .'
+                    sh 'docker build -t ${DOCKER_IMAGE} .'
                 }
             }
         }
      }  
+	stage('Docker Image Scan') {
+            steps {
+                sh 'trivy image --format table -o try-image-report.html ${DOCKER_IMAGE}'
+            }
+        } 
+       stage('Push Docker Image') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker_cred', toolName: 'docker') {
+                        sh 'docker push ${DOCKER_IMAGE}'
+                }
+            }
+        } 
+       }
 }
 }
