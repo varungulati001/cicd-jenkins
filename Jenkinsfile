@@ -76,7 +76,7 @@ pipeline {
                 sh 'trivy image --format table -o try-image-report.html ${DOCKER_IMAGE}'
             }
         } 
-       stage('Push Docker Image') {
+	stage('Push Docker Image') {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker_cred', toolName: 'docker') {
@@ -85,5 +85,13 @@ pipeline {
             }
         } 
        }
+	stage ('Deploy to Kubernetes'){
+      	steps {
+        script {
+            sh 'kubectl apply -f deployment-services.yaml'
+            sh 'kubectl apply -f svc.yaml'
+        }
+      }
+    } 
 }
 }

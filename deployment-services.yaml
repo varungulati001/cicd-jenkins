@@ -1,0 +1,20 @@
+metadata:
+  name: board-deployment
+  labels:
+    app: boardgame
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: boardgame
+  template:
+    metadata:
+      labels:
+        app: boardgame
+    spec:
+      containers:
+      - name: boardgame
+        image: varungulati01/boardshack:latest
+        ports:
+        - containerPort: 8080
+
