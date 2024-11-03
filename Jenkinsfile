@@ -54,5 +54,14 @@ pipeline {
                 sh 'mvn deploy'
             }
         }
+ 	stage('Build Docker Image and Tag') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker_cred', toolName: 'docker') {
+                    sh 'docker build -t varungulati01/boardshack:latest .'
+                }
+            }
+        }
+     }  
 }
 }
