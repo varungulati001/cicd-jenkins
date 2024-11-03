@@ -127,11 +127,11 @@
 	 <distributionManagement>
         <repository>
             <id>maven3</id>
-            <url>http://ec2-54-209-231-206.compute-1.amazonaws.com:8081/repository/maven-releases/</url>
+            <url>http://54.92.223.158:8081/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
             <id>maven-snapshots</id>
-            <url>http://ec2-54-209-231-206.compute-1.amazonaws.com:8081/repository/maven-snapshots/</url>
+            <url>http://54.92.223.158:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
