@@ -20,12 +20,12 @@ This guide provides detailed instructions to set up a complete CI/CD environment
 
 ### 1. System Update
 
-bash
+```bash
 sudo apt update
 sudo apt upgrade -y
 2. Jenkins Installation
 Install Jenkins along with OpenJDK.
-
+```
 bash
 Copy code
 # Import Jenkins key and add the repository
