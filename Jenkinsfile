@@ -89,7 +89,7 @@ pipeline {
       	steps {
         script {
             sh 'kubectl apply -f deployment-services.yaml'
-            sh 'kubectl apply -f svc.yaml'
+           sh 'kubectl apply -f svc.yaml'
         }
       }
     } 

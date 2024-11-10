@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: boardgame
-        image: varungulati01/boardshack:latest
+        image: varungulati01/boardshack:25
         ports:
         - containerPort: 8080
